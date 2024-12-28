@@ -1,0 +1,41 @@
+<h1>kjscguiew</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Shop</title>
+</head>
+<body>
+    <h1>Shop</h1>
+    <a href="{% url 'user_product' %}"><button>add</button></a>
+
+    <!-- Filter by Category -->
+    <h2>Categories</h2>
+    <ul>
+        <form method="get" action="{% url 'home' %}">
+        <button type="sumbit">all</button>
+        </form>  
+        {% for category in categories %}
+        <form method="get" action="{% url 'filter_by_category' category.id %}">
+          <button type="submit">{{ category.name }}</button>
+        </form>
+        {% endfor %}
+    </ul>
+
+    <!-- Display Items -->
+    <h2>Items</h2>
+    <div>
+        {% for item in items %}
+            <div>
+                <a href="{% url 'sample' %}"> <img  src="{{ item.image.url }}" alt="{{ item.name }}" style="width: 150px; height: 150px;"></a>
+                <h3>{{ item.name }}</h3>
+                <p>Price: ${{ item.price }}</p>
+                <form method="post" action="{% url 'delete' item.id %}">
+                    {% csrf_token %}
+                    <button type="submit">delete</button>
+                </form>
+                
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
